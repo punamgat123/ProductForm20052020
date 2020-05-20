@@ -1,0 +1,139 @@
+﻿@model ProductTest.Models.Product
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">  
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>  
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>  
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+</head>
+    <script>
+        $(document).ready(function () {
+            $("#Purchase_Date").datepicker();
+        });
+        $(document).ready(function () {
+            $(".product").change(function () {
+                var selValue = $("input[type='radio']:checked").val();
+                if (selValue = Date) {
+                    $("#search").datepicker();                
+                }
+                else {
+                   
+                    $("#search").datepicker('hide');
+                }
+            console.log(selValue);
+        });
+        });
+           
+</script>  
+<body>
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>Product</legend>
+        <h4>@ViewBag.name</h4>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Price)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Price)
+            @Html.ValidationMessageFor(model => model.Price)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Quantity)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Quantity)
+            @Html.ValidationMessageFor(model => model.Quantity)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsGSTApplicable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsGSTApplicable)
+            @Html.ValidationMessageFor(model => model.IsGSTApplicable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Purchase_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Purchase_Date,new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Purchase_Date)
+        </div>
+
+       
+
+        <p>
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </p>
+    </fieldset>
+    <br />
+   
+}
+    @using (Html.BeginForm("Index","Home",FormMethod.Get))
+    {
+         <p>
+             <b>Sort By:</b>@*@Html.RadioButton("searchBy","Name")<text>Name</text>
+             @Html.RadioButton("searchBy","Date")<text>Date</text>  <br />*@
+             <input type="radio" name="data" class="product" value="Name" checked>Name
+            <input type="radio" name="data" class="product" value="Date">Date
+             <br />
+         @Html.TextBox("search")
+      <input type="submit" name="submit" value="Search"/> 
+    </p>
+    }
+<div>
+   <div class="container">
+      
+       <table class="table table-striped">
+           <thead>
+               <tr><th>Id</th>
+               <th>Name</th>
+               <th>Price</th>
+               <th>Quantity</th>
+               <th>IsGstApplicable</th>
+               <th>Purchase Date</th>
+               <th>Expiry Date</th>
+               </tr>
+           </thead>
+           <tbody>
+               @foreach (var product in ViewBag.List)
+               {
+                   <tr>
+                       <td>@product.Id</td>
+                       <td>@product.Name</td>
+                       <td>@product.Price</td>
+                       <td>@product.Quantity</td>
+                       <td>@product.IsGSTApplicable</td>
+                       <td>@product.Purchase_Date</td>
+                       <td>@product.ExpiryDate</td>
+                   </tr>
+               }
+                   
+           </tbody>
+       </table>
+    </div>
+</div>
+    </body>
+</html>
+
+
